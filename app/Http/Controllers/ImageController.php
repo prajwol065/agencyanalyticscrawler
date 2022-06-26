@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
+    /**
+     * Displays the list of crawled scrapped images
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
         $images = Image::all();
@@ -19,7 +24,5 @@ class ImageController extends Controller
         } else {
         return view('webcrawl.images.show', ['images' => $uniques]);
         }
-
-        /* echo "unique images2:".$count; */
     }
 }

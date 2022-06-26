@@ -9,6 +9,9 @@ class Image extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    /**
+     * Get the main webcrawler for image
+     */
     public function webcrawler()
     {
         return $this->belongsTo('App\Models\Webcrawler');

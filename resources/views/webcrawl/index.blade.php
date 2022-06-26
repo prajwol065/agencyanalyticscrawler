@@ -1,6 +1,7 @@
 <x-home-master>
 
     @section('content')
+        {{-- Show flash message for successful crawling --}}
         @if (Session::has('info'))
             <div class="d-flex">
                 <div class="alert alert-success mx-auto mt-4 col-md-8"> {{ session('info') }}</div>

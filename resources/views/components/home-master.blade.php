@@ -10,6 +10,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">
     <link href="{{ secure_asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ secure_asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     {{-- <link href="{{asset('css/app.css')}}" rel="stylesheet"> --}}
     <!-- Styles -->
     <style>
@@ -49,6 +50,10 @@
         .navbar {
             margin-bottom: 10px;
         }
+
+        table#dataTable {
+            margin-left: 205px;
+        }
     </style>
 </head>
 
@@ -65,16 +70,20 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul class="nav nav-pills nav-fill">
                         <li class="nav-item ">
-                            <a class="nav-link" href="{{ route('webcrawl.store') }}">Start Crawling</a>
+                            <a class="nav-link" href="{{ route('webcrawl.store') }}">Start Crawling <i
+                                    class="fa fa-paint-brush"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('webcrawl.index') }}">Page Summary</a>
+                            <a class="nav-link" href="{{ route('webcrawl.index') }}">Page Summary <i
+                                    class="fa fa-book-open"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('webcrawl.show') }}">Overall Summary</a>
+                            <a class="nav-link" href="{{ route('webcrawl.show') }}">Overall Summary <i
+                                    class="fa fa-eye"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('image.show') }}">Unique Images</a>
+                            <a class="nav-link" href="{{ route('image.show') }}">Unique Images <i
+                                    class="fa fa-image"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -86,9 +95,10 @@
 
         </div>
     </div>
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ secure_asset('vendor/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ secure_asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ secure_asset('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ secure_asset('vendor/fontawesome-free/js/all.min.js') }}"></script>
     @yield('scripts')
 </body>
 

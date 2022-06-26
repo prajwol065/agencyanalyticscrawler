@@ -9,10 +9,16 @@ class Webcrawler extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    /**
+     * Get the images for main webcrawl
+     */
     public function images()
     {
         return $this->hasMany('App\Models\Image');
     }
+    /**
+     * Get the crawled urls for main webcrawl
+     */
     public function crawls()
     {
         return $this->hasMany('App\Models\Crawl');

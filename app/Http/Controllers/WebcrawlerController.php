@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 class WebcrawlerController extends Controller
 {
     private $streamContext;
+
+    /**
+     * Displays list of Webcrawler Model
+     *
+     * @return \Illuminate\View\View
+     *
+     */
     public function index()
     {
         $webcrawl = Webcrawler::all();
@@ -22,6 +29,12 @@ class WebcrawlerController extends Controller
             return view('webcrawl.index', ['webcrawl' => $webcrawl]);
         }
     }
+    /**
+     *
+     * Display the Ovarall summary of Webcrawler, Crawl and Image Models
+     *
+     * @return \Illuminate\View\View
+     */
     public function show()
     {
         $webcrawl = Webcrawler::all();
@@ -34,6 +47,13 @@ class WebcrawlerController extends Controller
             return view('webcrawl.show', ['webcrawl' => $webcrawl, 'images' => $images, 'crawls' => $crawls]);
         }
     }
+    /**
+     * Truncate All database records and
+     * Store newly scrapped records in the Webcrawler Model
+     * Then point to other functions for other scrapped properties
+     *
+     * @return void
+     */
     public function store()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -79,6 +99,15 @@ class WebcrawlerController extends Controller
         session()->flash('info', 'Crawling has been finished!!');
         return redirect()->route('webcrawl.index');
     }
+    /**
+     * From the single entry point call other secondary page urls
+     * Then store those information in Webcrawler Model database
+     * Also call other functions to add in the database
+     *
+     * @param string $url
+     * @param \App\Models\Webcrawler $webcrawl
+     * @return void
+     */
     public function secondaryPage($url, Webcrawler $webcrawl)
     {
         $randomPageNumbers = random_int(3, 5);
@@ -109,7 +138,15 @@ class WebcrawlerController extends Controller
             }
         }
     }
-
+    /**
+     * Function to crawl the provided url for both internal and external links
+     * Then call other functions to get images scrapped, word count and average title length
+     *
+     * @param string $url
+     * @param integer $secondary
+     * @param \App\Models\Webcrawler $webcrawler
+     * @return void
+     */
     public function linkCrawler($url, $secondary = 0, Webcrawler $webcrawler)
     {
         if ($secondary == 1) {
@@ -166,7 +203,13 @@ class WebcrawlerController extends Controller
             }
         }
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param string $contents
+     * @param \App\Models\Webcrawler $webcrawler
+     * @return void
+     */
     public function wordCounter($contents, Webcrawler $webcrawler)
     {
 
@@ -176,7 +219,13 @@ class WebcrawlerController extends Controller
         $webcrawler->word_count = $result;
         $webcrawler->save();
     }
-
+    /**
+     * Function to store database records of images crawled corresponding to crawled url
+     *
+     * @param DomDocument $htmlDom
+     * @param Webcrawler $webcrawl
+     * @return void
+     */
     public function imagesCrawler($htmlDom, Webcrawler $webcrawl)
     {
 
@@ -190,6 +239,13 @@ class WebcrawlerController extends Controller
             }
         }
     }
+    /**
+     * Function to store average title length in datbase corresponding to crawled url
+     *
+     * @param DOMDocument $htmldom
+     * @param Webcrawler $webcrawl
+     * @return void
+     */
     public function titleLength($htmldom, Webcrawler $webcrawl)
     {
         $lengthOfTitle = [];
@@ -204,6 +260,12 @@ class WebcrawlerController extends Controller
         $webcrawl->average_title_length = (int)$averageTitleLength;
         $webcrawl->save();
     }
+    /**
+     * Function to get http status code
+     *
+     * @param string $codeString
+     * @return int
+     */
     public function httpCodeParser($codeString)
     {
         if (preg_match("#HTTP/[0-9\.]+\s+([0-9]+)#", $codeString, $result))

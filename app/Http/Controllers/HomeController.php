@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    /**
+     * Displays the HomePage
+     *
+     * @return \Illuminate\View\View
+     */
     public function index(){
         $webcrawler = Webcrawler::all();
         if($webcrawler->isEmpty()){
